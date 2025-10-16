@@ -1,0 +1,30 @@
+[package]
+name = "typst-rs"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "typst"
+crate-type = ["staticlib"]
+
+[[bin]]
+name = "uniffi-bindgen-go"
+path = "src/uniffi-bindgen-go.rs"
+
+[dependencies]
+libc = "0.2.177"
+markdown = "1.0.0"
+uniffi = { version = "0.28.3" }
+uniffi-bindgen-go = { git = "https://github.com/NordSecurity/uniffi-bindgen-go.git", tag = "v0.4.0+v0.28.3" }
+
+[build-dependencies]
+uniffi = { version = "0.28.3", features = ["build"] }
+
+[features]
+cli = ["uniffi/cli"]
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
